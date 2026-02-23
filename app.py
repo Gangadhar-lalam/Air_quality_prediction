@@ -9,6 +9,9 @@ application = Flask(__name__)
 app = application
 
 ## Route for a home page
+@app.route('/home')
+def home():
+    return render_template('home.html')
 @app.route('/')
 def index():
     return render_template('index.html') 
@@ -42,4 +45,4 @@ def predict_datapoint():
         return render_template('home.html', results=results[0])
 
 if __name__ == "__main__":      
-    app.run(host="0.0.0.0", port=80)
+    app.run(debug=True, host="0.0.0.0", port=5000)

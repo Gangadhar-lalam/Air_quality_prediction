@@ -6,7 +6,10 @@
   <title>🌍 Air Quality Predictor</title>
 
   <!-- Bootstrap CSS -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+  />
 
   <style>
     body {
@@ -55,11 +58,20 @@
     }
   </style>
 </head>
+
 <body>
   <div class="welcome-card">
     <h1>🌍 Welcome to the Air Quality Predictor</h1>
-    <p>Quickly estimate air quality levels based on environmental parameters like temperature, humidity, pollution levels, and proximity to industrial areas.</p>
-    <a href="{{ url_for('home') }}" class="btn btn-primary">Go to Prediction Form 🚀</a>
+
+    <p>
+      Quickly estimate air quality levels based on environmental parameters
+      like temperature, humidity, pollution levels, and proximity to industrial areas.
+    </p>
+
+    <!-- Fixed link -->
+    <a href="{{ url_for('predict_datapoint') }}" class="btn btn-primary">
+      Go to Prediction Form 🚀
+    </a>
   </div>
 </body>
 </html>
