@@ -5,128 +5,178 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>🌍 Air Quality Prediction</title>
 
-  <!-- Bootstrap CSS -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
-  
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+  />
+
   <style>
     body {
-      background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+      background: linear-gradient(135deg, #11998e, #38ef7d);
       min-height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      color: #333;
+      font-family: 'Segoe UI', sans-serif;
+      animation: fadeInBody 1s ease-in-out;
+    }
+
+    @keyframes fadeInBody {
+      from { opacity: 0; }
+      to { opacity: 1; }
     }
 
     .card {
       width: 100%;
-      max-width: 650px;
+      max-width: 600px;
       border-radius: 20px;
-      box-shadow: 0px 8px 20px rgba(0,0,0,0.25);
-      background: #fff;
+      box-shadow: 0 15px 30px rgba(0,0,0,0.2);
       padding: 2rem;
+      animation: slideUp 0.8s ease-in-out;
     }
 
-    .card h1 {
-      font-size: 1.8rem;
-      font-weight: bold;
+    @keyframes slideUp {
+      from {
+        transform: translateY(40px);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    h2 {
       text-align: center;
-      margin-bottom: 1.5rem;
+      font-weight: bold;
       color: #11998e;
-    }
-
-    label {
-      font-weight: 600;
-      margin-bottom: 0.3rem;
+      margin-bottom: 1.5rem;
     }
 
     .form-control {
-      border-radius: 10px;
+      border-radius: 12px;
       padding: 0.6rem;
+      transition: 0.3s;
+    }
+
+    .form-control:focus {
+      box-shadow: 0 0 8px rgba(17, 153, 142, 0.6);
+      border-color: #11998e;
     }
 
     .btn-primary {
-      width: 100%;
-      padding: 0.8rem;
-      font-size: 1rem;
-      border-radius: 12px;
       background: linear-gradient(to right, #11998e, #38ef7d);
       border: none;
-      transition: transform 0.2s ease-in-out;
+      border-radius: 12px;
+      transition: 0.3s ease-in-out;
     }
 
     .btn-primary:hover {
-      transform: scale(1.03);
+      transform: scale(1.05);
     }
 
-    .prediction {
-      margin-top: 1.5rem;
-      text-align: center;
-      font-size: 1.3rem;
-      font-weight: bold;
-      color: #444;
+    .btn-secondary {
+      border-radius: 12px;
+      transition: 0.3s;
     }
+
+    .btn-secondary:hover {
+      transform: scale(1.05);
+    }
+
+    .result-box {
+      margin-top: 1.5rem;
+      padding: 1rem;
+      border-radius: 12px;
+      text-align: center;
+      font-size: 1.2rem;
+      font-weight: bold;
+      animation: fadeInResult 0.8s ease-in-out;
+    }
+
+    @keyframes fadeInResult {
+      from { opacity: 0; transform: scale(0.9); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
   </style>
 </head>
 
 <body>
-  <div class="card">
-    <h1>🌍 Air Quality Prediction</h1>
 
-    <form action="{{ url_for('predict_datapoint')}}" method="post">
+<div class="card bg-white">
 
-      <div class="mb-3">
-        <label>Temperature (°C)</label>
-        <input class="form-control" type="number" step="0.01" name="Temperature" placeholder="Enter Temperature" required />
-      </div>
+  <h2>🌍 Air Quality Prediction</h2>
 
-      <div class="mb-3">
-        <label>Humidity (%)</label>
-        <input class="form-control" type="number" step="0.01" name="Humidity" placeholder="Enter Humidity" required />
-      </div>
+  <button
+    type="button"
+    class="btn btn-secondary mb-3 w-100"
+    onclick="getLiveData()"
+  >
+    📍 Use My Location
+  </button>
 
-      <div class="mb-3">
-        <label>PM2.5 (µg/m³)</label>
-        <input class="form-control" type="number" step="0.01" name="PM2.5" placeholder="Enter PM2.5 value" required />
-      </div>
+  <form action="{{ url_for('predict_datapoint') }}" method="post">
 
-      <div class="mb-3">
-        <label>PM10 (µg/m³)</label>
-        <input class="form-control" type="number" step="0.01" name="PM10" placeholder="Enter PM10 value" required />
-      </div>
+    <input class="form-control mb-2" name="Temperature" placeholder="Temperature" required>
+    <input class="form-control mb-2" name="Humidity" placeholder="Humidity" required>
+    <input class="form-control mb-2" name="PM2_5" placeholder="PM2.5" required>
+    <input class="form-control mb-2" name="PM10" placeholder="PM10" required>
+    <input class="form-control mb-2" name="NO2" placeholder="NO2" required>
+    <input class="form-control mb-2" name="SO2" placeholder="SO2" required>
+    <input class="form-control mb-2" name="CO" placeholder="CO" required>
+    <input class="form-control mb-2" name="Proximity_to_Industrial_Areas" placeholder="Proximity" required>
+    <input class="form-control mb-3" name="Population_Density" placeholder="Population Density" required>
 
-      <div class="mb-3">
-        <label>NO2 (µg/m³)</label>
-        <input class="form-control" type="number" step="0.01" name="NO2" placeholder="Enter NO2 value" required />
-      </div>
+    <button type="submit" class="btn btn-primary w-100">
+      Predict 🚀
+    </button>
 
-      <div class="mb-3">
-        <label>SO2 (µg/m³)</label>
-        <input class="form-control" type="number" step="0.01" name="SO2" placeholder="Enter SO2 value" required />
-      </div>
+  </form>
 
-      <div class="mb-3">
-        <label>CO (mg/m³)</label>
-        <input class="form-control" type="number" step="0.01" name="CO" placeholder="Enter CO value" required />
-      </div>
-
-      <div class="mb-3">
-        <label>Proximity to Industrial Areas (km)</label>
-        <input class="form-control" type="number" step="0.01" name="Proximity_to_Industrial_Areas" placeholder="Enter Proximity to Industrial Areas" required />
-      </div>
-
-      <div class="mb-3">
-        <label>Population Density (per km²)</label>
-        <input class="form-control" type="number" step="0.01" name="Population_Density" placeholder="Enter Population Density" required />
-      </div>
-
-      <button type="submit" class="btn btn-primary">Predict Air Quality 🚀</button>
-    </form>
-
-    <div class="prediction">
-      The predicted Air Quality is: {{ results }}
+  {% if results %}
+    <div class="result-box bg-light">
+      Air Quality: {{ results }}
     </div>
-  </div>
+  {% endif %}
+
+</div>
+
+
+<script>
+function getLiveData() {
+
+  navigator.geolocation.getCurrentPosition(function(pos){
+
+    fetch("/get_live_data", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        lat: pos.coords.latitude,
+        lon: pos.coords.longitude
+      })
+    })
+    .then(res => res.json())
+    .then(data => {
+
+      document.querySelector('[name="Temperature"]').value = data.Temperature;
+      document.querySelector('[name="Humidity"]').value = data.Humidity;
+      document.querySelector('[name="PM2_5"]').value = data.PM2_5;
+      document.querySelector('[name="PM10"]').value = data.PM10;
+      document.querySelector('[name="NO2"]').value = data.NO2;
+      document.querySelector('[name="SO2"]').value = data.SO2;
+      document.querySelector('[name="CO"]').value = data.CO;
+      document.querySelector('[name="Proximity_to_Industrial_Areas"]').value =
+        data.Proximity_to_Industrial_Areas;
+      document.querySelector('[name="Population_Density"]').value =
+        data.Population_Density;
+
+    });
+
+  });
+
+}
+</script>
+
 </body>
 </html>
