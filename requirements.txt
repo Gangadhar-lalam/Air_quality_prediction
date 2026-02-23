@@ -7,3 +7,6 @@ xgboost
 dill
 catboost
 Flask
+requests
+python-dotenv
+gunicorn
