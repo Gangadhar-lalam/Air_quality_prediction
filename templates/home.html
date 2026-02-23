@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>🌍 Air Quality Prediction</title>
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  
+  <style>
+    body {
+      background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: #333;
+    }
+
+    .card {
+      width: 100%;
+      max-width: 650px;
+      border-radius: 20px;
+      box-shadow: 0px 8px 20px rgba(0,0,0,0.25);
+      background: #fff;
+      padding: 2rem;
+    }
+
+    .card h1 {
+      font-size: 1.8rem;
+      font-weight: bold;
+      text-align: center;
+      margin-bottom: 1.5rem;
+      color: #11998e;
+    }
+
+    label {
+      font-weight: 600;
+      margin-bottom: 0.3rem;
+    }
+
+    .form-control {
+      border-radius: 10px;
+      padding: 0.6rem;
+    }
+
+    .btn-primary {
+      width: 100%;
+      padding: 0.8rem;
+      font-size: 1rem;
+      border-radius: 12px;
+      background: linear-gradient(to right, #11998e, #38ef7d);
+      border: none;
+      transition: transform 0.2s ease-in-out;
+    }
+
+    .btn-primary:hover {
+      transform: scale(1.03);
+    }
+
+    .prediction {
+      margin-top: 1.5rem;
+      text-align: center;
+      font-size: 1.3rem;
+      font-weight: bold;
+      color: #444;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="card">
+    <h1>🌍 Air Quality Prediction</h1>
+
+    <form action="{{ url_for('predict_datapoint')}}" method="post">
+
+      <div class="mb-3">
+        <label>Temperature (°C)</label>
+        <input class="form-control" type="number" step="0.01" name="Temperature" placeholder="Enter Temperature" required />
+      </div>
+
+      <div class="mb-3">
+        <label>Humidity (%)</label>
+        <input class="form-control" type="number" step="0.01" name="Humidity" placeholder="Enter Humidity" required />
+      </div>
+
+      <div class="mb-3">
+        <label>PM2.5 (µg/m³)</label>
+        <input class="form-control" type="number" step="0.01" name="PM2.5" placeholder="Enter PM2.5 value" required />
+      </div>
+
+      <div class="mb-3">
+        <label>PM10 (µg/m³)</label>
+        <input class="form-control" type="number" step="0.01" name="PM10" placeholder="Enter PM10 value" required />
+      </div>
+
+      <div class="mb-3">
+        <label>NO2 (µg/m³)</label>
+        <input class="form-control" type="number" step="0.01" name="NO2" placeholder="Enter NO2 value" required />
+      </div>
+
+      <div class="mb-3">
+        <label>SO2 (µg/m³)</label>
+        <input class="form-control" type="number" step="0.01" name="SO2" placeholder="Enter SO2 value" required />
+      </div>
+
+      <div class="mb-3">
+        <label>CO (mg/m³)</label>
+        <input class="form-control" type="number" step="0.01" name="CO" placeholder="Enter CO value" required />
+      </div>
+
+      <div class="mb-3">
+        <label>Proximity to Industrial Areas (km)</label>
+        <input class="form-control" type="number" step="0.01" name="Proximity_to_Industrial_Areas" placeholder="Enter Proximity to Industrial Areas" required />
+      </div>
+
+      <div class="mb-3">
+        <label>Population Density (per km²)</label>
+        <input class="form-control" type="number" step="0.01" name="Population_Density" placeholder="Enter Population Density" required />
+      </div>
+
+      <button type="submit" class="btn btn-primary">Predict Air Quality 🚀</button>
+    </form>
+
+    <div class="prediction">
+      The predicted Air Quality is: {{ results }}
+    </div>
+  </div>
+</body>
+</html>
