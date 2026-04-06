@@ -70,6 +70,27 @@ def get_live_data():
 
 
         components = air_res["list"][0]["components"]
+        city = weather_res.get("name", "Unknown")
+
+        # ------------------------------
+        # Dynamic Population Logic
+        # ------------------------------
+        if city in ["Delhi", "Mumbai", "Kolkata", "Bangalore", "Chennai"]:
+            population = 10000
+        elif city in ["Hyderabad", "Visakhapatnam", "Pune", "Ahmedabad"]:
+            population = 7000
+        else:
+            population = 3000
+
+        # ------------------------------
+        # Dynamic Proximity Logic
+        # ------------------------------
+        if population > 8000:
+            proximity = 2     # Highly industrial
+        elif population > 5000:
+            proximity = 5     # Moderate
+        else:
+            proximity = 10    # Less industrial
 
 
         result = {
