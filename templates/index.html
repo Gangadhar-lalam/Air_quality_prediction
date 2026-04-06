@@ -12,66 +12,110 @@
   />
 
   <style>
+
+    /* Page Background */
     body {
-      background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+      background: linear-gradient(135deg, #11998e, #38ef7d);
       min-height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      color: #fff;
       text-align: center;
+      animation: fadeIn 1s ease-in-out;
     }
 
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    /* Welcome Card */
     .welcome-card {
       background: rgba(255, 255, 255, 0.95);
       color: #11998e;
-      padding: 3rem 2rem;
-      border-radius: 20px;
-      box-shadow: 0px 8px 20px rgba(0,0,0,0.25);
+      padding: 3rem 2.5rem;
+      border-radius: 25px;
+      box-shadow: 0 15px 30px rgba(0,0,0,0.25);
       max-width: 600px;
+      width: 100%;
+      animation: slideUp 0.8s ease-in-out;
+      transition: 0.3s;
     }
 
+    @keyframes slideUp {
+      from {
+        transform: translateY(40px);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    .welcome-card:hover {
+      transform: translateY(-5px);
+    }
+
+    /* Title */
     h1 {
-      font-size: 2rem;
+      font-size: 2.2rem;
       font-weight: bold;
       margin-bottom: 1rem;
+      animation: popIn 1s ease;
     }
 
+    @keyframes popIn {
+      from { transform: scale(0.8); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    /* Description */
     p {
       font-size: 1.1rem;
       margin-bottom: 2rem;
+      color: #444;
+      line-height: 1.6;
     }
 
+    /* Button */
     .btn-primary {
-      padding: 0.8rem 2rem;
-      font-size: 1rem;
-      border-radius: 12px;
+      padding: 0.8rem 2.2rem;
+      font-size: 1.1rem;
+      border-radius: 15px;
       background: linear-gradient(to right, #11998e, #38ef7d);
       border: none;
-      transition: transform 0.2s ease-in-out;
+      transition: all 0.3s ease-in-out;
       color: #fff;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
     }
 
     .btn-primary:hover {
-      transform: scale(1.05);
+      transform: scale(1.08);
+      box-shadow: 0 8px 25px rgba(0,0,0,0.3);
     }
+
   </style>
 </head>
 
 <body>
+
   <div class="welcome-card">
-    <h1>🌍 Welcome to the Air Quality Predictor</h1>
+
+    <h1>🌍 Welcome to Air Quality Predictor</h1>
 
     <p>
-      Quickly estimate air quality levels based on environmental parameters
-      like temperature, humidity, pollution levels, and proximity to industrial areas.
+      Predict real-time air quality based on temperature, humidity,
+      pollution levels, and your location.
+      Stay informed. Stay safe. 🌱
     </p>
 
-    <!-- Fixed link -->
     <a href="{{ url_for('predict_datapoint') }}" class="btn btn-primary">
-      Go to Prediction Form 🚀
+      Start Prediction 🚀
     </a>
+
   </div>
+
 </body>
 </html>

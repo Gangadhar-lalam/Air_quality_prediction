@@ -74,19 +74,20 @@ def get_live_data():
 
         result = {
 
-            "Temperature": weather_res["main"]["temp"],
-            "Humidity": weather_res["main"]["humidity"],
+                "Temperature": weather_res["main"]["temp"],
+                "Humidity": weather_res["main"]["humidity"],
 
-            "PM2_5": components["pm2_5"],
-            "PM10": components["pm10"],
-            "NO2": components["no2"],
-            "SO2": components["so2"],
-            "CO": components["co"],
+                "PM2_5": components["pm2_5"],
+                "PM10": components["pm10"],
+                "NO2": components["no2"],
+                "SO2": components["so2"],
 
-            "Proximity_to_Industrial_Areas": 5,
-            "Population_Density": 8000
-        }
+                # ✅ FIX HERE
+                "CO": components["co"] / 1000,   # convert μg → mg
 
+                "Proximity_to_Industrial_Areas": 5,
+                "Population_Density": 8000
+}
 
         return jsonify(result)
 
